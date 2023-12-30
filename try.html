@@ -1,0 +1,14 @@
+function dynamicFizzBuzz(max, num1, num2) {
+    let arrayFizz = [];
+
+    for (i = 1; i < max; i++) {
+        if (i % num1 === 0 && i % num2 !== 0) {
+            arrayFizz.push(i);
+        } else if (i % num2 === 0 && num1 !== 0) {
+            arrayFizz.push(i);
+        }
+    }
+
+}
+
+console.log(dynamicFizzBuzz(20, 3, 5));
