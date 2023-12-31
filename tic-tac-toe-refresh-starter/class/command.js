@@ -1,3 +1,6 @@
+const TTT = require('./ttt');
+
+
 class Command {
 
   constructor(key, description, action) {
@@ -13,4 +16,5 @@ class Command {
 }
 
 
-module.exports = Command;
+
+module.exports = Command, TTT;

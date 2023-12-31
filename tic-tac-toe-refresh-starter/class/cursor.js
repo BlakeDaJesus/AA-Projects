@@ -1,5 +1,6 @@
 const Screen = require("./screen");
 
+
 class Cursor {
 
   constructor(numRows, numCols) {
@@ -22,23 +23,66 @@ class Cursor {
     Screen.setBackgroundColor(this.row, this.col, this.cursorColor);
   }
 
-  up() {
-    // Move cursor up
-  }
+    up = () => {
+        this.resetBackgroundColor();
 
-  down() {
-    // Move cursor down
-  }
+        if (this.row <= 2 && this.row > 0) {
+            this.row -= 1;
+        }
 
-  left() {
-    // Move cursor left
-  }
+        this.setBackgroundColor();
+        Screen.render();
+    }
 
-  right() {
-    // Move cursor right
-  }
+    down = () => {
+        this.resetBackgroundColor();
 
+        if (this.row < 2 && this.row >= 0) {
+            this.row += 1;
+        }
+
+        this.setBackgroundColor();
+        Screen.render();
+    }
+
+    left = () => {
+        this.resetBackgroundColor();
+
+        if (this.col > 0 && this.col <= 2) {
+            this.col -= 1;
+        }
+
+        this.setBackgroundColor();
+        Screen.render();
+    }
+
+    right = () => {
+        this.resetBackgroundColor();
+
+        if (this.col >= 0 && this.col < 2) {
+            this.col += 1;
+        }
+
+        this.setBackgroundColor();
+        Screen.render();
+    }
+
+    place = () => {
+        let gridBox = Screen.grid[this.row][this.col];
+
+        if (this.cursorColor.includes('yellow') && gridBox === ' ') {
+            Screen.setGrid(this.row, this.col, 'X')
+            this.cursorColor = 'blue';
+            this.playerTurn
+            Screen.setBackgroundColor(this.row, this.col, this.cursorColor);
+        } else if (this.cursorColor.includes('blue') && gridBox === ' ') {
+            Screen.setGrid(this.row, this.col, 'O');
+            this.cursorColor = 'yellow';
+            Screen.setBackgroundColor(this.row, this.col, this.cursorColor);
+        }
+
+        Screen.render();
+    }
 }
-
 
 module.exports = Cursor;
