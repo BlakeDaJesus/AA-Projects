@@ -68,21 +68,26 @@ class Cursor {
     }
 
     place = () => {
-        let gridBox = Screen.grid[this.row][this.col];
+        const row = this.cursor.row;
+        const col = this.cursor.col;
+        const gridBox = Screen.grid[row][col];
 
-        if (this.cursorColor.includes('yellow') && gridBox === ' ') {
-            Screen.setGrid(this.row, this.col, 'X')
-            this.cursorColor = 'blue';
-            this.playerTurn
-            Screen.setBackgroundColor(this.row, this.col, this.cursorColor);
-        } else if (this.cursorColor.includes('blue') && gridBox === ' ') {
-            Screen.setGrid(this.row, this.col, 'O');
+        if (this.playerTurn === 'X' && gridBox === ' ') {
+            console.log(this.playerTurn)
+            Screen.setGrid(row, col, 'X')
+            this.cursor.cursorColor = 'blue';
+            this.playerTurn = 'O'
+            Screen.setBackgroundColor(row, col, this.cursor.cursorColor);
+        } else if (this.playerTurn === 'O' && gridBox === ' ') {
+            Screen.setGrid(this.row, this.col, this.playerTurn);
             this.cursorColor = 'yellow';
-            Screen.setBackgroundColor(this.row, this.col, this.cursorColor);
+            this.playerTurn = 'X';
+            Screen.setBackgroundColor(row, col, this.cursor.cursorColor);
         }
 
         Screen.render();
     }
+
 }
 
 module.exports = Cursor;

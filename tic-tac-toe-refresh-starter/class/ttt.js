@@ -23,7 +23,29 @@ class TTT {
         Screen.addCommand('up', 'Move up', this.cursor.up);
         Screen.addCommand('down', 'Move down', this.cursor.down);
         Screen.addCommand('right', 'Move to the right', this.cursor.right);
-        Screen.addCommand('return', 'Place your move', this.cursor.place);
+        Screen.addCommand('return', 'Place your move', this.place);
+        Screen.render();
+    }
+
+    place = () => {
+        const row = this.cursor.row;
+        const col = this.cursor.col;
+        const gridBox = Screen.grid[row][col];
+
+
+        if (this.playerTurn === "X" && gridBox === ' ') {
+            Screen.setGrid(row, col, this.playerTurn)
+            this.cursor.cursorColor = 'yellow';
+            this.playerTurn = "O";
+        } else if (this.playerTurn === "O" && gridBox === ' ') {
+            this.cursor.cursorColor = 'blue';
+            Screen.setGrid(row, col, this.playerTurn);
+            this.playerTurn = "X"
+        }
+
+        if (TTT.checkWin(Screen.grid)) {
+            TTT.endGame(TTT.checkWin(Screen.grid));
+        };
         Screen.render();
     }
 
@@ -60,6 +82,7 @@ class TTT {
     }
 
     static endGame(winner) {
+
         if (winner === 'O' || winner === 'X') {
             Screen.setMessage(`Player ${winner} wins!`);
         } else if (winner === 'T') {
